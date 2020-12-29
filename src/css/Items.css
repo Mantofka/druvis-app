@@ -1,0 +1,20 @@
+.items {
+    width: 300px;
+    height: 300px;
+    border: 1px solid blue;
+    margin-left: 35px;
+    margin-top: 35px;
+}
+
+.items__image {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.items__image > img {
+    max-width: 250px;
+    max-height: 250px;
+}

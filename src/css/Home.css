@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+.home {
+  position: relative;
+  overflow: hidden;
+}
+
+.upArrow__Button {
+  position: fixed;
+  box-sizing: border-box;
+  right: 30px;
+  top: 92vh;
+  border-radius: 20px;
+  padding: 4px;
+  background-color: rgb(168, 161, 161);
+  cursor: pointer;
+  z-index: 10;
+}
