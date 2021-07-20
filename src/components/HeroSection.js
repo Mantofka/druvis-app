@@ -1,31 +1,75 @@
-import { motion, useViewportScroll, useTransform } from 'framer-motion';
-import React from 'react';
-import '../css/HeroSection.css'
+import React, { useEffect, useRef } from 'react';
+import {
+  HeroContainer,
+  LogoImage,
+  TextContainer,
+  TextArea,
+  TopicListContainer,
+  AnimatableContainer,
+  PrimaryText,
+  SecondaryText,
+} from '../styled-components/HeroSectionStyles';
+import { useTransform, useViewportScroll } from 'framer-motion';
 
 // Images
-import heroImg from '../images/hero.png';
+import Logo from '../images/logo.svg';
+import Cloud from '../images/cloud.png';
 
-function HeroSection({ title, subText }) {
-  const y = useViewportScroll(0); // Declaring variable which holds current Viewport data.
-  const opacity = useTransform(y.scrollY, [0, 300], [1, 0]);
+// Framer motion variants
+import {
+  AnimatableVariants,
+  ElementVariants,
+} from '../framer-animation/HeroSectionVariants';
+
+function HeroSection({ title, subText, children }) {
+  const { scrollY } = useViewportScroll();
+  const y = useTransform(scrollY, [0, 400], [0, 400]);
+  const opacity = useTransform(scrollY, [150, 400], [1, 0.3]);
+  const imageRef = useRef(null);
+
+  const handleScrolling = (e) => {
+    setTimeout(function () {
+      window.scroll(0, window.innerHeight, { behavior: 'smooth' });
+    }, 1);
+  };
 
   return (
-    <section className='section__hero'>
-      <div className='hero__left'>
-        <motion.h1 opacity={opacity}>{title}</motion.h1>
-        <p>{subText}</p>
-      </div>
-      <div className='hero__right'>
-        <img alt='' src={heroImg} />
-      </div>
-    </section>
+    <HeroContainer>
+      <div
+        style={{
+          position: 'absolute',
+          top: 0,
+          width: '100%',
+          height: '130vh',
+          background: `url(${Cloud}) no-repeat`,
+          opacity: '0.09',
+          backgroundSize: '100% auto',
+          left: 0,
+        }}
+      ></div>
+      <LogoImage
+        ref={imageRef}
+        style={{ y: y, opacity: opacity }}
+        src={Logo}
+        onClick={(e) => handleScrolling(e)}
+      />
+      <AnimatableContainer
+        variants={AnimatableVariants}
+        initial='closed'
+        animate={window.scrollY >= window.innerHeight - 150 ? 'open' : 'closed'}
+      >
+        <TextContainer variants={ElementVariants}>
+          <TextArea>
+            <PrimaryText>{title}</PrimaryText>
+            <SecondaryText>{subText}</SecondaryText>
+          </TextArea>
+        </TextContainer>
+        <TopicListContainer variants={ElementVariants}>
+          {children}
+        </TopicListContainer>
+      </AnimatableContainer>
+    </HeroContainer>
   );
 }
 
 export default HeroSection;
-
-// Sukurta idėjoms skleisti
-/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-aliquip ex ea commodo consequat.*/

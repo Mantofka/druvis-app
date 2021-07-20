@@ -1,9 +1,20 @@
-import React from 'react';
-import '../css/Section.css';
-import { motion, useViewportScroll } from 'framer-motion';
+import React, { useEffect, useState, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-router-dom';
-import video from '../videos/InstagramBait.mp4';
+
+// Styles.
+import {
+  Container,
+  SectionContainer,
+  SectionLeft,
+  SectionRight,
+  Button,
+  Video,
+  PrimaryText,
+  SecondaryText,
+} from '../styled-components/SectionStyles';
+
+// Framer motion variants.
 
 const sectionVariant = {
   open: {
@@ -26,8 +37,7 @@ const sectionContentVariant = {
     opacity: 1,
     transition: {
       duration: 0.5,
-      type: 'spring',
-      ease: [0.14, 0.57, 1, 1],
+      ease: [0.43, 0.32, 0.37, 0.96],
     },
   },
   closed: (direction) => ({
@@ -40,39 +50,47 @@ const sectionContentVariant = {
   }),
 };
 
+function Section({ bigText, subText, secRef, reference, video = '' }) {
+  const [ref, inView] = useInView({ threshold: 0.3 });
+  const [isVisible, setIsVisible] = useState(false);
 
+  const videoRef = useRef(null);
 
-function Section({ bigText, subText, secRef }) {
-  const y = useViewportScroll(0);
-  const [ref, inView] = useInView({ threshold: 0.5 });
+  useEffect(() => {
+    inView && setIsVisible(true);
+    if (video != '') {
+      inView ? videoRef.current.play() : videoRef.current.pause();
+    }
+  }, [inView]);
 
   return (
-    <section ref={secRef} className='section__container'>
-      <motion.div
-        ref={ref}
-        variants={sectionVariant}
-        initial='closed'
-        animate={inView ? 'open' : 'closed'}
-        className='section__left'
-      >
-        <motion.h1 variants={sectionContentVariant} custom={1}>
-          {bigText}
-        </motion.h1>
-        <motion.p variants={sectionContentVariant} custom={1}>
-          {subText}
-        </motion.p>
-        <motion.button variants={sectionContentVariant} custom={-1}>
-          <Link to='/uav' style={{ textDecoration: 'none' }}>
-            Į galeriją
-          </Link>
-        </motion.button>
-      </motion.div>
-      <div className='section__right'>
-        <video muted autoPlay loop>
-          <source src={video} />
-        </video>
-      </div>
-    </section>
+    <Container>
+      <SectionContainer ref={secRef}>
+        <SectionLeft
+          ref={ref}
+          variants={sectionVariant}
+          initial='closed'
+          animate={isVisible ? 'open' : 'closed'}
+        >
+          <PrimaryText variants={sectionContentVariant} custom={1}>
+            {bigText}
+          </PrimaryText>
+          <SecondaryText variants={sectionContentVariant} custom={1}>
+            {subText}
+          </SecondaryText>
+          <Button variants={sectionContentVariant} custom={-1}>
+            <Link to={reference} style={{ textDecoration: 'none' }}>
+              Į galeriją
+            </Link>
+          </Button>
+        </SectionLeft>
+        <SectionRight>
+          <Video muted loop preload='none' playsinline ref={videoRef}>
+            <source src={video} />
+          </Video>
+        </SectionRight>
+      </SectionContainer>
+    </Container>
   );
 }
 

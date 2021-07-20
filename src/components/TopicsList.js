@@ -1,7 +1,22 @@
-import { motion } from 'framer-motion';
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import '../css/TopicsList.css';
+
+import {
+  SectionContainer,
+  TopicContainer,
+} from '../styled-components/TopicsListStyles';
+
+// Images
+import UavImage from '../images/uav.jpg';
+import MechatronicsImage from '../images/mechatronics.jpg';
+import PrintingImage from '../images/printing.jpg';
+import ModellingImage from '../images/modelling.jpg';
+
+// Images minimized (phones/ tablets)
+import UavImage_min from '../images/uav_min.jpg';
+import MechatronicsImage_min from '../images/mechatronics_min.jpg';
+import PrintingImage_min from '../images/printing_min.jpg';
+import ModellingImage_min from '../images/modelling_min.jpg';
 
 const topicsVariants = {
   open: {
@@ -15,51 +30,54 @@ const topicsVariants = {
 
 const topicVariants = {
   open: {
-    scale: 1,
+    y: '-35vh',
     opacity: 1,
     transition: {
       duration: 0.2,
-      type: 'tween',
+      ease: [0.43, 0.13, 0.23, 0.96],
     },
   },
   closed: {
+    y: 100,
     opacity: 0,
   },
 };
 
-function TopicsList({ printingRef, uavRef, woodWorkingRef }) {
+function TopicsList({ printingRef, uavRef, engineeringRef, modelingRef }) {
   const [ref, inView] = useInView({ threshold: 0.4 });
 
-  const scrollToElement = (ref) => ref.current.scrollIntoView();
+  const scrollToElement = (ref) =>
+    ref.current.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
   return (
-    <motion.section
-      ref={ref}
-      variants={topicsVariants}
-      initial='closed'
-      animate={inView ? 'open' : 'closed'}
-      className='section__topics'
-    >
-      <motion.div
-        variants={topicVariants}
-        className='topics__gallery topics__container'
-      ></motion.div>
-      <motion.div
+    <SectionContainer ref={ref} variants={topicsVariants}>
+      <TopicContainer
+        bigURL={PrintingImage}
+        minURL={PrintingImage_min}
+        labas='3D spausdinimas'
         onClick={() => scrollToElement(printingRef)}
         variants={topicVariants}
-        className='topics__printing topics__container'
-      ></motion.div>
-      <motion.div
+      ></TopicContainer>
+      <TopicContainer
+        bigURL={UavImage}
+        minURL={UavImage_min}
+        labas='Bepiločiai'
         onClick={() => scrollToElement(uavRef)}
         variants={topicVariants}
-        className='topics__uav topics__container'
-      ></motion.div>
-      <motion.div
-        onClick={() => scrollToElement(woodWorkingRef)}
+      ></TopicContainer>
+      <TopicContainer
+        bigURL={MechatronicsImage}
+        minURL={MechatronicsImage_min}
+        onClick={() => scrollToElement(engineeringRef)}
         variants={topicVariants}
-        className='topics__woodWorking topics__container'
-      ></motion.div>
-    </motion.section>
+      ></TopicContainer>
+      <TopicContainer
+        bigURL={ModellingImage}
+        minURL={ModellingImage_min}
+        onClick={() => scrollToElement(modelingRef)}
+        variants={topicVariants}
+      ></TopicContainer>
+    </SectionContainer>
   );
 }
 

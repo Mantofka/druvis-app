@@ -1,27 +1,21 @@
 import React from 'react';
 import '../css/Header.css';
 import { Link } from 'react-router-dom';
-import { useStateValue } from '../StateProvider';
+import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
 
 function Header() {
-  const [{ user }, dispatch] = useStateValue();
+  const [ref, inView] = useInView({ threshold: 1 });
   return (
-    <div className='header'>
-      <div className='header__container'>
-        <div className='header__logo'>
-          <Link to='/' style={{ textDecoration: 'none' }}>
-            <div className='header__text'>
-              <h1>Druvis</h1>
-            </div>
-          </Link>
-        </div>
-        <div className='header__links'>
-          <a href='#l'>Galerija</a>
-          <a href='#l'>Apie</a>
-          {!user && <Link to='/login'></Link>}
-        </div>
-      </div>
-    </div>
+    <motion.div
+      style={{ backgroundColor: '#202030' }}
+      animate={{ opacity: inView ? 1 : 0 }}
+      transition={{ duration: 0.5 }}
+      className='header'
+      ref={ref}
+    >
+      <Link to='/'>TECHNOLOGIJOS KITAIP</Link>
+    </motion.div>
   );
 }
 

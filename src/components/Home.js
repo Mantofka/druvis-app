@@ -1,24 +1,37 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
 import '../css/Home.css';
-import { storage } from './firebase';
 import { motion, useViewportScroll } from 'framer-motion';
 import UpArrow from './UpArrow';
 
 // Sections
 import HeroSection from './HeroSection';
-import TopicsList from './TopicsList';
 import Section from './Section';
 
 // Footer
 import Footer from './Footer';
 
+import TopicsList from './TopicsList';
+
+//Videos for 840px and above
+import laserVideo from '../videos/laserVideo.mp4';
+import uavVideo from '../videos/uavVideo.mp4';
+import mechatronicsVideo from '../videos/mechatronicsVideo.mp4';
+
+// Videos minimized (phone / tablets) for 840px and below
+
+import laserVideo_min from '../videos/laserVideo_min.mp4';
+import uavVideo_min from '../videos/uavVideo_min.mp4';
+import mechatronicsVideo_min from '../videos/mechatronicsVideo_min.mp4';
+
 function Home() {
   const [scrollYPos, setScrollYPos] = useState(0);
 
-  const uavRef = useRef();
-  const printingRef = useRef();
-  const woodWorkingRef = useRef();
-  const galleryRef = useRef();
+  // References to sections
+
+  const uavRef = useRef(null);
+  const printingRef = useRef(null);
+  const engineeringRef = useRef(null);
+  const modelingRef = useRef(null);
 
   // Arrow Variant
 
@@ -49,65 +62,24 @@ function Home() {
 
   const y = useViewportScroll(0); // Declaring variable which holds current Viewport data.
 
-  // Works only when scrollYPos is changed.
   useEffect(() => {
-    window.addEventListener('scroll', () => scrollPosition());
-    window.removeEventListener('scroll', () => scrollPosition());
-  }, [scrollYPos]);
+    window.addEventListener('scroll', scrollPosition);
+    return function cleanup() {
+      window.removeEventListener('scroll', scrollPosition);
+    };
+  }, []);
 
   // Function that gets user to the page top.
   const bringUp = () => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0, { behavior: 'smooth' });
   };
-
-  /*
-  const [image, setimage] = useState(null); // Giving a file temporary storage.
-  const handleChange = (e) => {
-    if (e.target.files[0] && e.target.files[0].type.includes('image')) {
-      setimage(e.target.files[0]); // Declaring the file to the useState.
-    } else {
-      alert(
-        'Whoops! Something went wrong, check if you are uploading an image file'
-      );
-    }
-  };
-
-  // Uploading files to Firebase Storage
-  const handleUpload = () => {
-    if (image) {
-      // if there is an image inside state, do below
-      const storageRef = storage.ref();
-      const task = storage.ref(`images/${image.name}`).put(image); // Getting the storage reference and putting file to exact location.
-      task.on(
-        'state_changed', // When state is changed do (properties): 1) next, 2) onError, 3) onComplete
-        null,
-        (err) => {
-          console.log('Something went wrong!');
-        },
-        () => {
-          alert('Uploaded successfully!');
-          setimage(null);
-          storageRef
-            .child('images/')
-            .listAll()
-            .then((res) => {
-              console.log(res.items.length);
-              res.items.forEach(function (image) {
-                console.log('Image reference: ', image.toString());
-              });
-            });
-        }
-      );
-    }
-  };
-*/
 
   return (
     <div className='home'>
       <motion.div
         variants={arrowVariants}
         initial='closed'
-        animate={y.scrollY.current > 500 ? 'open' : 'closed'}
+        animate={scrollYPos > 500 ? 'open' : 'closed'}
         whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.85 }}
         className='upArrow__Button'
@@ -118,45 +90,57 @@ function Home() {
 
       {/* Hero section */}
       <HeroSection
-        title={`Sukurta idėjoms skleisti`}
-        subText={`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`}
-      />
+        title={`Mokinių besidominančių technine kūryba projektiniai darbai, idėjos.`}
+        subText={`Mokiniai, kurie mėgsta kurti, konstruoti, modeliuoti, projektuoti ir gaminti pačius įvairiausius gaminius, produktus, modelius, maketus ar prototipus, pristato savo projektinius darbus.`}
+      >
+        {/* Section with the topics*/}
+        <TopicsList
+          printingRef={printingRef}
+          uavRef={uavRef}
+          engineeringRef={engineeringRef}
+          modelingRef={modelingRef}
+        />
+      </HeroSection>
 
-      {/* Section with the topics*/}
-      <TopicsList
-        printingRef={printingRef}
-        uavRef={uavRef}
-        woodWorkingRef={woodWorkingRef}
-      />
+      <Suspense fallback={<div>Kraunamas puslapis...</div>}>
+        {/* One of the topics - Printing */}
+        <Section
+          bigText={`3D spausdinimas`}
+          subText={`Susipažinę su techniniu modeliavimu, TinkerCAD ir Fusion 360 programose atlieka įvairius projektinius darbus. Gamina modelius, maketus ar detalių prototipus.`}
+          secRef={printingRef}
+          reference={'3d-printing'}
+        />
 
-      {/* One of the topics - UAV */}
-      <Section
-        bigText={`Bepiločiai`}
-        subText={`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.`}
-        secRef={uavRef}
-      />
+        {/* One of the topics - UAV */}
+        <Section
+          bigText={`Bepiločiai`}
+          subText={`Mokinių kūrybinėse dirbtuvėse sumodeliuoti, sukonstruoti ir pagaminti bepiločiai orlaiviai. Jų valdymas atliekamas stimuliatoriuje, eksperimentuojant ir testuojant modelius.`}
+          secRef={uavRef}
+          reference={'uav'}
+          video={window.innerWidth > 840 ? uavVideo : uavVideo_min}
+        />
 
-      {/* One of the topics - Printing */}
-      <Section
-        bigText={`3D spausdinimas`}
-        subText={`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-      ad minim veniam, quis nostrud.`}
-        secRef={printingRef}
-      />
+        {/* One of the topics - Engineering solutions */}
+        <Section
+          bigText={`Elektronikos inžinerija`}
+          subText={`Mokinių projektiniai darbai atlikti naudojant elektronikos įtaisus ar integruotąsias elektronines sistemas, integrinių grandynų lustus, valdiklius ir kitus elektroninius įtaisus. Taip atlikdami įvairias užduotis gerina elektronikos žinias.`}
+          secRef={engineeringRef}
+          reference={'engineering'}
+          video={
+            window.innerWidth > 840 ? mechatronicsVideo : mechatronicsVideo_min
+          }
+        />
 
-      {/* One of the topics - Woodworking */}
-      <Section
-        bigText={`Medžių dirbiniai`}
-        subText={`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-      ad minim veniam, quis nostrud.`}
-        secRef={woodWorkingRef}
-      />
+        {/* One of the topics - Modeliavimas */}
+        <Section
+          bigText={`Modeliavimas`}
+          subText={`Mokiniai susipažinę su įvairiomis medžiagomis, išmoksta elementarių, bet nuosekliai sudėtingėjančių medžiagų rankinio apdorojimo būdų, atlieka konstravimo ir modeliavimo darbus. Mokinasi gaminti techninius žaislus, laivų ir lėktuvėlių modelius.`}
+          secRef={modelingRef}
+          reference={'modelling'}
+          video={window.innerWidth > 840 ? laserVideo : laserVideo_min}
+        />
+      </Suspense>
       <Footer />
-
-      {/*<input type='file' onChange={handleChange}></input>
-      <button onClick={handleUpload}>Upload</button>*/}
     </div>
   );
 }

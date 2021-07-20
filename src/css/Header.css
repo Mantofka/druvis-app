@@ -1,46 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap');
 
 .header {
-  height: clamp(3rem, 4.5vw, 4.5rem);
+  position: absolute;
+  height: 60px;
   width: 100%;
-  background-color: #222222;
-}
-
-.header__container {
-  width: 100%;
-  height: 100%;
+  z-index: 15;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
 }
 
-.header__logo {
-  margin-right: auto;
-  margin-left: clamp(1rem, 3vw, 3rem);
-  cursor: pointer;
-}
-
-.header__text {
-  font-size: calc(14px + 2 * ((100vw - 200px) / 680));
-}
-
-.header__logo > a {
+.header > a {
+  z-index: 100;
+  position: relative;
   color: white;
-}
-
-.header__links {
-  display: inline-block;
-}
-
-.header__links > a {
   text-decoration: none;
-  font-family: 'Montserrat', sans-serif;
-  color: white;
-  margin-right: clamp(1rem, 3vw, 3rem);
-  font-size: calc(10px + 4 * ((100vw - 200px) / 680));
-  transition: all 250ms ease-in-out;
+  margin-left: clamp(1rem, 3vw, 3rem);
+  font-weight: 700;
+  font-size: calc(20px + 2 * ((100vw - 200px) / 1024));
 }
 
-.header__links > a:hover {
-  opacity: 0.7;
+@media (max-width: 420px) {
+  .header > a {
+    z-index: 100;
+    font-size: 15px;
+  }
 }

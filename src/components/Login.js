@@ -11,6 +11,10 @@ function Login() {
 
   const [{ user }, dispatch] = useStateValue();
 
+  useEffect(() => {
+    user && history.push(`/login-success/`);
+  }, [user, []]);
+
   const signIn = (e) => {
     e.preventDefault();
 
@@ -18,7 +22,7 @@ function Login() {
     auth
       .signInWithEmailAndPassword(email, password)
       .then((auth) => {
-        history.push(`/login-success/${user.uid}`);
+        history.push(`/login-success/`);
       })
       .catch((err) => alert(err.message));
   };
