@@ -3,14 +3,7 @@ import React from 'react';
 // Components.
 import Section from './Section';
 
-import videos from '../videos';
-
 function SectionList({ printingRef, uavRef, engineeringRef, modelingRef }) {
-  const getVideo = (section) => {
-    return window.innerWidth > 840
-      ? videos[section].detailed
-      : videos[section].minimized;
-  };
 
   return (
     <div>

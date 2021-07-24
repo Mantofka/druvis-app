@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from "react";
+import { useInView } from "react-intersection-observer";
+import { Link } from "react-router-dom";
 
 // Styles.
 import {
@@ -12,27 +12,25 @@ import {
   Video,
   PrimaryText,
   SecondaryText,
-} from '../styled-components/SectionStyles';
+} from "../styled-components/SectionStyles";
 
-import videos from '../videos';
+import videos from "../videos";
+
+import uavVideo from "../videos/uavVideo.mp4";
 
 // Framer motion variants
 import {
   sectionVariants,
   contentVariants,
-} from '../framer-animation/SectionVariants';
+} from "../framer-animation/SectionVariants";
 
-function Section({ bigText, subText, secRef, reference, video = '' }) {
+function Section({ bigText, subText, secRef, reference, video = "" }) {
   const [ref, inView] = useInView({ threshold: 0.3 });
   const [isVisible, setIsVisible] = useState(false);
 
   const videoRef = useRef(null);
-
   useEffect(() => {
     inView && setIsVisible(true);
-    if (video != '') {
-      inView ? videoRef.current.play() : videoRef.current.pause();
-    }
   }, [inView]);
 
   const fetchReferencedVideo = () => {
@@ -40,10 +38,15 @@ function Section({ bigText, subText, secRef, reference, video = '' }) {
       ? window.innerWidth > 840
         ? videos[reference]?.detailed
         : videos[reference]?.minimized
-      : '';
+      : "";
   };
+
+  const fetchReferencedVideoUpdated = () => {
+    return videos[reference] ? videos[reference]?.minimized : "";
+  };
+
   useEffect(() => {
-    console.log(videos[reference] || '');
+    console.log(uavVideo);
   }, []);
 
   return (
@@ -53,7 +56,7 @@ function Section({ bigText, subText, secRef, reference, video = '' }) {
           ref={ref}
           variants={sectionVariants}
           initial='closed'
-          animate={isVisible ? 'open' : 'closed'}
+          animate={isVisible ? "open" : "closed"}
         >
           <PrimaryText variants={contentVariants} custom={1}>
             {bigText}
@@ -62,15 +65,20 @@ function Section({ bigText, subText, secRef, reference, video = '' }) {
             {subText}
           </SecondaryText>
           <Button variants={contentVariants} custom={-1}>
-            <Link to={reference} style={{ textDecoration: 'none' }}>
+            <Link to={reference} style={{ textDecoration: "none" }}>
               Į galeriją
             </Link>
           </Button>
         </SectionLeft>
         <SectionRight>
-          <Video muted loop preload='none' playsinline ref={videoRef}>
-            <source src={fetchReferencedVideo} />
-          </Video>
+          <Video
+            ç
+            muted
+            loop
+            preload='none'
+            playsinline
+            ref={videoRef}
+          ></Video>
         </SectionRight>
       </SectionContainer>
     </Container>
