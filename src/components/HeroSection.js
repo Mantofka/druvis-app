@@ -26,10 +26,12 @@ function HeroSection({ title, subText, children }) {
   const y = useTransform(scrollY, [0, 400], [0, 400]);
   const opacity = useTransform(scrollY, [150, 400], [1, 0.3]);
   const imageRef = useRef(null);
+  const animContainerRef = useRef(null);
 
   const handleScrolling = (e) => {
     setTimeout(function () {
-      window.scroll(0, window.innerHeight, { behavior: 'smooth' });
+      animContainerRef.current.scrollIntoView({ behavior: "smooth", block: "nearest"});
+
     }, 1);
   };
 
@@ -57,6 +59,7 @@ function HeroSection({ title, subText, children }) {
         variants={AnimatableVariants}
         initial='closed'
         animate={window.scrollY >= window.innerHeight - 150 ? 'open' : 'closed'}
+        ref={animContainerRef}
       >
         <TextContainer variants={ElementVariants}>
           <TextArea>

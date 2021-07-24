@@ -9,8 +9,6 @@ export const SubSection = styled.div`
   align-items: flex-start;
   border-top: 1px solid #f07167;
   border-bottom: 1px solid #f07167;
-  -webkit-box-shadow: 0px 6px 16px 5px #000000;
-  box-shadow: 0px 6px 16px 5px #000000;
   & > h3 {
     font-size: 10px;
     margin-left: 30px;
@@ -58,10 +56,11 @@ export const Button = styled.button`
 export const GalleryContainer = styled.section`
   position: relative;
   padding: 30px 20px;
-  background-color: #0081a7;
+  max-width: 1200px;
+  margin: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.5rem;
   justify-content: start;
   min-height: 300px;
   @media (max-width: 1000px) {
@@ -76,6 +75,7 @@ export const GalleryContainer = styled.section`
     grid-template-columns: 1fr;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
   }
 `;
 

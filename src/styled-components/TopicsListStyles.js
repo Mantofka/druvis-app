@@ -30,8 +30,8 @@ export const SectionContainer = styled(motion.section)`
 export const TopicContainer = styled(motion.div)`
   position: relative;
   width: 100%;
-  max-width: 350px;
-  height: auto;
+  max-width: 220px;
+  max-height: 300px;
   border: 1px solid #f07167;
   transition: all 150ms ease-in-out;
   &::before {

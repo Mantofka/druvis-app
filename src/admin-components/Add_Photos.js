@@ -1,16 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { storage } from '../components/firebase';
-import { AnimatePresence } from 'framer-motion';
+import React, { useState, useRef, useEffect } from "react";
+import { storage } from "../components/firebase";
+import { AnimatePresence } from "framer-motion";
 
 //Reusable component
-import { AddToQuene } from '../reusable-functions/AddToQuene';
+import { AddToQuene } from "../reusable-functions/AddToQuene";
 
 // Reusable functions.
-import { handleAlert } from '../reusable-functions/DispatchAlert';
+import { handleAlert } from "../reusable-functions/DispatchAlert";
 
 // Components.
-import SubSection from './SubSection';
-
+import SubSection from "./SubSection";
 // Styles
 import {
   Modal,
@@ -24,55 +23,55 @@ import {
   Image,
   Video,
   DeleteIcon,
-} from '../styled-components/repetitive/AdministrationWindow';
+} from "../styled-components/repetitive/AdministrationWindow";
 
 // Reducer.
-import { useStateValue } from '../StateProvider';
+import { useStateValue } from "../StateProvider";
 
 // Material UI.
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 // Reducer actions.
-import { CHANGE_PHOTO_MODAL, CHANGE_IS_UPLOADING } from '../actions';
+import { CHANGE_PHOTO_MODAL, CHANGE_IS_UPLOADING } from "../actions";
 
 // Administration Variants.
 import {
   SourceVariants,
   ModalVariants,
-} from '../framer-animation/administration/administrationModal';
+} from "../framer-animation/administration/administrationModal";
 
 const SelectionStyle = {
-  outline: 'none',
-  border: '1px solid #d9cbcb',
-  height: '30px',
-  backgroundColor: 'transparent',
-  borderRadius: '4px',
-  WebkitBorderRadius: '4px',
-  MozBorderRadius: '4px',
-  marginBottom: '15px',
+  outline: "none",
+  border: "1px solid #d9cbcb",
+  height: "30px",
+  backgroundColor: "transparent",
+  borderRadius: "4px",
+  WebkitBorderRadius: "4px",
+  MozBorderRadius: "4px",
+  marginBottom: "15px",
 };
 
 function Add_Photos() {
   const [{ isModalAddPhotosOpened }, dispatch] = useStateValue();
-  const [section, setSection] = useState('uav-images/');
-  const [subSection, setSubSection] = useState('drones/');
+  const [section, setSection] = useState("uav-images/");
+  const [subSection, setSubSection] = useState("drones/");
   const [source, setSource] = useState([]);
   const [previewURL, setPreviewURL] = useState([]);
   const oldFileButton = useRef(null);
 
   useEffect(() => {
     switch (section) {
-      case 'uav-images/':
-        setSubSection('drones/');
+      case "uav-images/":
+        setSubSection("drones/");
         break;
-      case 'engineering-images/':
-        setSubSection('cnc-tools/');
+      case "engineering-images/":
+        setSubSection("cnc-tools/");
         break;
-      case 'modelling-images/':
-        setSubSection('toys/');
+      case "modelling-images/":
+        setSubSection("toys/");
         break;
-      case 'printing-images/':
-        setSubSection('printing-images/');
+      case "printing-images/":
+        setSubSection("printing-images/");
         break;
     }
   }, [section]);
@@ -82,8 +81,8 @@ function Add_Photos() {
       Object.keys(e.target.files).map((i) => {
         if (
           e.target.files[i] &&
-          (e.target.files[i].type.includes('image') ||
-            e.target.files[i].type.includes('video'))
+          (e.target.files[i].type.includes("image") ||
+            e.target.files[i].type.includes("video"))
         ) {
           let file = e.target.files[i];
           console.log(e.target.files[i]);
@@ -94,16 +93,16 @@ function Add_Photos() {
           setSource((prevState) => [...prevState, file]);
         } else {
           handleAlert(
-            'ERROR',
-            'Galite įkelti tik nuotraukas arba vaizdo įrašus.',
+            "ERROR",
+            "Galite įkelti tik nuotraukas arba vaizdo įrašus.",
             dispatch
           );
         }
       });
     } catch (error) {
       handleAlert(
-        'ERROR',
-        'Įvyko klaida. Prašome bandyti dar kartą.',
+        "ERROR",
+        "Įvyko klaida. Prašome bandyti dar kartą.",
         dispatch
       );
     }
@@ -115,15 +114,15 @@ function Add_Photos() {
       source.map((file) => {
         // Checking if it needs to add subSection (because PrintingPage doesn't have one)
         let path =
-          section.includes('engineering-images') ||
-          section.includes('modelling-images') ||
-          section.includes('uav-images')
+          section.includes("engineering-images") ||
+          section.includes("modelling-images") ||
+          section.includes("uav-images")
             ? `${section}${subSection}`
             : `${section}`;
         const task = storage.ref(`sections/${path}${file.name}`).put(file);
         console.log(path);
         task.on(
-          'state_changed', // When state is changed do (properties): 1) next, 2) onError, 3) onComplete
+          "state_changed", // When state is changed do (properties): 1) next, 2) onError, 3) onComplete
           null,
           (err) => {},
           () => {
@@ -186,7 +185,7 @@ function Add_Photos() {
       <Modal
         variants={ModalVariants}
         initial='hidden'
-        animate={isModalAddPhotosOpened ? 'visible' : 'hidden'}
+        animate={isModalAddPhotosOpened ? "visible" : "hidden"}
         exit='hidden'
       >
         <form>
@@ -203,8 +202,8 @@ function Add_Photos() {
               </option>
               <option value='modelling-images/'>Modeliavimas</option>
             </Selection>
-            {!section.includes('printing-images/') && <Label>Poskiltis</Label>}
-            {!section.includes('printing-images') && (
+            {!section.includes("printing-images/") && <Label>Poskiltis</Label>}
+            {!section.includes("printing-images") && (
               <SubSection
                 section={section}
                 setSubSection={setSubSection}
@@ -217,15 +216,15 @@ function Add_Photos() {
               style={{
                 border:
                   source.length == 0
-                    ? 'dashed 2px #D9CBCB'
-                    : 'dashed 2px #0081A7',
+                    ? "dashed 2px #D9CBCB"
+                    : "dashed 2px #0081A7",
               }}
             >
               Pasirinkta: {source.length}
             </FileButton>
             <input
               type='file'
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               ref={oldFileButton}
               multiple='multiple'
               onChange={handlePhoto}
@@ -237,12 +236,12 @@ function Add_Photos() {
                 key='sourceContainer'
                 variants={SourceVariants}
                 initial='hidden'
-                animate={previewURL.length > 0 ? 'visible' : 'hidden'}
+                animate={previewURL.length > 0 ? "visible" : "hidden"}
                 exit='hidden'
               >
                 {previewURL.map((image, i) => (
-                  <div style={{ position: 'relative' }} key={i}>
-                    {image.type.startsWith('image') ? (
+                  <div style={{ position: "relative" }} key={i}>
+                    {image.type.startsWith("image") ? (
                       <Image alt='' key={image.url} src={image.url} />
                     ) : (
                       <Video alt='' key={image.url} src={image.url} />
@@ -261,8 +260,8 @@ function Add_Photos() {
               inputColor='#C6CBCB'
               bgColor='#F07167'
               whileHover={{
-                backgroundColor: '#F35144',
-                transition: { duration: 0.2, type: 'tween' },
+                backgroundColor: "#F35144",
+                transition: { duration: 0.2, type: "tween" },
               }}
               onClick={changeModal}
             >
@@ -276,11 +275,11 @@ function Add_Photos() {
               style={{ opacity: source.length ? 1 : 0.2 }}
               whileHover={{
                 scale: source.length ? 1.03 : 1,
-                transition: { duration: 0.2, type: 'tween' },
+                transition: { duration: 0.2, type: "tween" },
               }}
               whileTap={{
                 scale: source.length ? 0.96 : 1,
-                transition: { duration: 0.2, type: 'tween' },
+                transition: { duration: 0.2, type: "tween" },
               }}
               type='submit'
               onClick={uploadPhotos}

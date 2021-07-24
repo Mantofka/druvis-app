@@ -73,7 +73,7 @@ const GallerySection = ({ desiredSection }) => {
   };
 
   return (
-    <div>
+    <div style={{backgroundColor: "#0081a7"}}>
       {isGalleryModalOpened && (
         <Suspense fallback={<div>Loading...</div>}>
           <PhotoModal current={bigImage} images={imagesPromise} />

@@ -1,7 +1,7 @@
 export const AnimatableVariants = {
   open: {
-    staggerChildren: 0.3,
-    delayChildren: 0.5,
+    staggerChildren: 0.6,
+    delayChildren: 1,
   },
   closed: {
     staggerChildren: 0.3,
@@ -12,7 +12,7 @@ export const AnimatableVariants = {
 export const ElementVariants = {
   open: {
     opacity: 1,
-    y: '-50vh',
+    x: 0,
     transition: {
       duration: 0.2,
       delay: 0.3,
@@ -21,7 +21,7 @@ export const ElementVariants = {
   },
   closed: {
     opacity: 0,
-    y: 0,
+    x: -window.innerWidth,
     transition: {
       duration: 0.2,
       delay: 0.3,

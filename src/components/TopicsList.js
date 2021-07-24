@@ -30,15 +30,16 @@ const topicsVariants = {
 
 const topicVariants = {
   open: {
-    y: '-35vh',
+    x: 0,
     opacity: 1,
     transition: {
-      duration: 0.2,
+      delay: 0.3,
+      duration: 0.3,
       ease: [0.43, 0.13, 0.23, 0.96],
     },
   },
   closed: {
-    y: 100,
+    x: window.innerWidth,
     opacity: 0,
   },
 };

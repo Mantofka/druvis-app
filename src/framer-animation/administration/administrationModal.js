@@ -2,7 +2,7 @@ export const SourceVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    height: 'auto',
+    height: "auto",
     transition: {
       duration: 0.4,
       delay: 0.2,
@@ -24,7 +24,7 @@ export const SourceVariants = {
 export const DeleteSectionVariants = {
   visible: {
     opacity: 1,
-    width: 'auto',
+    width: "auto",
     x: 0,
     zIndex: 10,
     transition: {
@@ -32,13 +32,13 @@ export const DeleteSectionVariants = {
       delay: 0.2,
       ease: [0.43, 0.13, 0.23, 0.96],
     },
-  },    
+  },
   hidden: {
     opacity: 0,
     width: 0,
     x: -50,
-    display: 'none',
-    zIndex: '-1',
+    display: "none",
+    zIndex: "-1",
     transition: {
       duration: 0.4,
       delay: 0.2,

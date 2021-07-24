@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, Suspense, lazy } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import '../css/Home.css';
 import { motion, useViewportScroll } from 'framer-motion';
 import UpArrow from './UpArrow';
@@ -90,8 +90,8 @@ function Home() {
 
       {/* Hero section */}
       <HeroSection
-        title={`Mokinių besidominančių technine kūryba projektiniai darbai, idėjos.`}
-        subText={`Mokiniai, kurie mėgsta kurti, konstruoti, modeliuoti, projektuoti ir gaminti pačius įvairiausius gaminius, produktus, modelius, maketus ar prototipus, pristato savo projektinius darbus.`}
+        title={`Mokinių, besidominančių technine kūryba, projektiniai darbai, idėjos.`}
+        subText={`Mokiniai, kurie mėgsta kurti, konstruoti, projektuoti ir gaminti įvairiausius gaminius, modelius ar prototipus, pristato savo projektinius darbus.`}
       >
         {/* Section with the topics*/}
         <TopicsList
