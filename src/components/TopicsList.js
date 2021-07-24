@@ -54,14 +54,12 @@ function TopicsList({ printingRef, uavRef, engineeringRef, modelingRef }) {
       <TopicContainer
         bigURL={PrintingImage}
         minURL={PrintingImage_min}
-        labas='3D spausdinimas'
         onClick={() => scrollToElement(printingRef)}
         variants={topicVariants}
       ></TopicContainer>
       <TopicContainer
         bigURL={UavImage}
         minURL={UavImage_min}
-        labas='Bepiločiai'
         onClick={() => scrollToElement(uavRef)}
         variants={topicVariants}
       ></TopicContainer>
