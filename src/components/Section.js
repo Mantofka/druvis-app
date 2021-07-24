@@ -14,41 +14,13 @@ import {
   SecondaryText,
 } from '../styled-components/SectionStyles';
 
-// Framer motion variants.
+import videos from '../videos';
 
-const sectionVariant = {
-  open: {
-    transition: {
-      staggerChildren: 0.4,
-      delayChildren: 0.2,
-    },
-  },
-  closed: {
-    transition: {
-      staggerChildren: 0.4,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const sectionContentVariant = {
-  open: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-      ease: [0.43, 0.32, 0.37, 0.96],
-    },
-  },
-  closed: (direction) => ({
-    x: direction * 1000,
-    opacity: 0,
-    transition: {
-      duration: 1,
-      delay: 0.2,
-    },
-  }),
-};
+// Framer motion variants
+import {
+  sectionVariants,
+  contentVariants,
+} from '../framer-animation/SectionVariants';
 
 function Section({ bigText, subText, secRef, reference, video = '' }) {
   const [ref, inView] = useInView({ threshold: 0.3 });
@@ -63,22 +35,33 @@ function Section({ bigText, subText, secRef, reference, video = '' }) {
     }
   }, [inView]);
 
+  const fetchReferencedVideo = () => {
+    return videos[reference]
+      ? window.innerWidth > 840
+        ? videos[reference]?.detailed
+        : videos[reference]?.minimized
+      : '';
+  };
+  useEffect(() => {
+    console.log(videos[reference] || '');
+  }, []);
+
   return (
     <Container>
       <SectionContainer ref={secRef}>
         <SectionLeft
           ref={ref}
-          variants={sectionVariant}
+          variants={sectionVariants}
           initial='closed'
           animate={isVisible ? 'open' : 'closed'}
         >
-          <PrimaryText variants={sectionContentVariant} custom={1}>
+          <PrimaryText variants={contentVariants} custom={1}>
             {bigText}
           </PrimaryText>
-          <SecondaryText variants={sectionContentVariant} custom={1}>
+          <SecondaryText variants={contentVariants} custom={1}>
             {subText}
           </SecondaryText>
-          <Button variants={sectionContentVariant} custom={-1}>
+          <Button variants={contentVariants} custom={-1}>
             <Link to={reference} style={{ textDecoration: 'none' }}>
               Į galeriją
             </Link>
@@ -86,7 +69,7 @@ function Section({ bigText, subText, secRef, reference, video = '' }) {
         </SectionLeft>
         <SectionRight>
           <Video muted loop preload='none' playsinline ref={videoRef}>
-            <source src={video} />
+            <source src={fetchReferencedVideo} />
           </Video>
         </SectionRight>
       </SectionContainer>

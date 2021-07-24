@@ -5,23 +5,15 @@ import UpArrow from './UpArrow';
 
 // Sections
 import HeroSection from './HeroSection';
-import Section from './Section';
+import SectionList from './SectionList';
 
 // Footer
 import Footer from './Footer';
 
 import TopicsList from './TopicsList';
 
-//Videos for 840px and above
-import laserVideo from '../videos/laserVideo.mp4';
-import uavVideo from '../videos/uavVideo.mp4';
-import mechatronicsVideo from '../videos/mechatronicsVideo.mp4';
-
-// Videos minimized (phone / tablets) for 840px and below
-
-import laserVideo_min from '../videos/laserVideo_min.mp4';
-import uavVideo_min from '../videos/uavVideo_min.mp4';
-import mechatronicsVideo_min from '../videos/mechatronicsVideo_min.mp4';
+// Variants.
+import { arrowVariants } from '../framer-animation/HomeVariants';
 
 function Home() {
   const [scrollYPos, setScrollYPos] = useState(0);
@@ -32,27 +24,6 @@ function Home() {
   const printingRef = useRef(null);
   const engineeringRef = useRef(null);
   const modelingRef = useRef(null);
-
-  // Arrow Variant
-
-  const arrowVariants = {
-    open: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        type: 'tween',
-      },
-    },
-    closed: {
-      x: '20vw',
-      opacity: 0,
-      transition: {
-        duration: 0.5,
-        type: 'tween',
-      },
-    },
-  };
 
   // Function which gets current scroll Y position.
 
@@ -103,25 +74,26 @@ function Home() {
       </HeroSection>
 
       <Suspense fallback={<div>Kraunamas puslapis...</div>}>
+        <SectionList printingRef={printingRef} uavRef={uavRef} engineeringRef={engineeringRef} modelingResf={modelingRef} />
         {/* One of the topics - Printing */}
-        <Section
+        {/*<Section
           bigText={`3D spausdinimas`}
           subText={`Susipažinę su techniniu modeliavimu, TinkerCAD ir Fusion 360 programose atlieka įvairius projektinius darbus. Gamina modelius, maketus ar detalių prototipus.`}
           secRef={printingRef}
           reference={'3d-printing'}
-        />
+        />*/}
 
         {/* One of the topics - UAV */}
-        <Section
+        {/*<Section
           bigText={`Bepiločiai`}
           subText={`Mokinių kūrybinėse dirbtuvėse sumodeliuoti, sukonstruoti ir pagaminti bepiločiai orlaiviai. Jų valdymas atliekamas stimuliatoriuje, eksperimentuojant ir testuojant modelius.`}
           secRef={uavRef}
           reference={'uav'}
           video={window.innerWidth > 840 ? uavVideo : uavVideo_min}
-        />
+        />*/}
 
         {/* One of the topics - Engineering solutions */}
-        <Section
+        {/*<Section
           bigText={`Elektronikos inžinerija`}
           subText={`Mokinių projektiniai darbai atlikti naudojant elektronikos įtaisus ar integruotąsias elektronines sistemas, integrinių grandynų lustus, valdiklius ir kitus elektroninius įtaisus. Taip atlikdami įvairias užduotis gerina elektronikos žinias.`}
           secRef={engineeringRef}
@@ -129,16 +101,16 @@ function Home() {
           video={
             window.innerWidth > 840 ? mechatronicsVideo : mechatronicsVideo_min
           }
-        />
+        />*/}
 
         {/* One of the topics - Modeliavimas */}
-        <Section
+        {/*<Section
           bigText={`Modeliavimas`}
           subText={`Mokiniai susipažinę su įvairiomis medžiagomis, išmoksta elementarių, bet nuosekliai sudėtingėjančių medžiagų rankinio apdorojimo būdų, atlieka konstravimo ir modeliavimo darbus. Mokinasi gaminti techninius žaislus, laivų ir lėktuvėlių modelius.`}
           secRef={modelingRef}
           reference={'modelling'}
           video={window.innerWidth > 840 ? laserVideo : laserVideo_min}
-        />
+        />*/}
       </Suspense>
       <Footer />
     </div>
