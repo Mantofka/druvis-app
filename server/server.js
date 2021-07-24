@@ -14,7 +14,7 @@ app.use(cors());
 
 // Connecting to mongoose
 mongoose.connect(
-  'mongodb+srv://user_mantofka:Klaviatura159@druvis-app.nwqgr.mongodb.net/<dbname>?retryWrites=true&w=majority',
+  '',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
