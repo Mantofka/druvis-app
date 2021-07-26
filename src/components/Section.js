@@ -16,8 +16,6 @@ import {
 
 import videos from "../videos";
 
-import uavVideo from "../videos/uavVideo.mp4";
-
 // Framer motion variants
 import {
   sectionVariants,
@@ -25,12 +23,13 @@ import {
 } from "../framer-animation/SectionVariants";
 
 function Section({ bigText, subText, secRef, reference, video = "" }) {
-  const [ref, inView] = useInView({ threshold: 0.3 });
+  const [ref, inView] = useInView({ threshold: 0.4 });
   const [isVisible, setIsVisible] = useState(false);
 
   const videoRef = useRef(null);
   useEffect(() => {
     inView && setIsVisible(true);
+    (inView && videos[reference]) ? videoRef.current.play() : videoRef.current.pause();
   }, [inView]);
 
   const fetchReferencedVideo = () => {
@@ -40,14 +39,6 @@ function Section({ bigText, subText, secRef, reference, video = "" }) {
         : videos[reference]?.minimized
       : "";
   };
-
-  const fetchReferencedVideoUpdated = () => {
-    return videos[reference] ? videos[reference]?.minimized : "";
-  };
-
-  useEffect(() => {
-    console.log(uavVideo);
-  }, []);
 
   return (
     <Container>
@@ -72,13 +63,13 @@ function Section({ bigText, subText, secRef, reference, video = "" }) {
         </SectionLeft>
         <SectionRight>
           <Video
-            ç
             muted
             loop
-            preload='none'
             playsinline
             ref={videoRef}
-          ></Video>
+          >
+            <source src={fetchReferencedVideo()} type="video/mp4" />
+          </Video>
         </SectionRight>
       </SectionContainer>
     </Container>
