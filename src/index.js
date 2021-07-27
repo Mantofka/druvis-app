@@ -1,21 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './css/index.css';
-import App from './components/App';
-import * as serviceWorker from './serviceWorker';
-import { StateProvider } from './StateProvider';
-import reducer, { initialState } from './components/reducer';
-import { BrowserRouter } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./css/index.css";
+import App from "./components/App";
+import * as serviceWorker from "./serviceWorker";
+import { StateProvider } from "./StateProvider";
+import reducer, { initialState } from "./components/reducer";
+import { BrowserRouter } from "react-router-dom";
+require("dotenv").config();
 
 ReactDOM.render(
   <React.StrictMode>
     <StateProvider initialState={initialState} reducer={reducer}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </StateProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

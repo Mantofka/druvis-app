@@ -27,8 +27,8 @@ exports.compressImage = functions
 
     console.log(filePath);
 
-    if (filePath.includes('HeroImages/')) {
-      return console.log(`Can't handle hero images`);
+    if (!filePath.includes('sections/')) {
+      return console.log(`Can't handle uploaded image. Current image is uploaded to the wrong directory for minimizing.`);
     }
 
     if (filePath.includes('engineering')) {

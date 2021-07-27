@@ -1,17 +1,17 @@
-import firebase from 'firebase/app';
-import 'firebase/storage';
-import 'firebase/auth';
-import 'firebase/firestore';
-require('dotenv').config();
+import firebase from "firebase/app";
+import "firebase/storage";
+import "firebase/auth";
+import "firebase/firestore";
+require("dotenv").config();
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCsy68kmLxISxE3IQq7_9mg_euMNc1B0wE',
-  authDomain: 'druvis-app.firebaseapp.com',
-  databaseURL: 'https://druvis-app.firebaseio.com',
-  projectId: 'druvis-app',
-  storageBucket: 'druvis-app.appspot.com',
-  messagingSenderId: '915599194468',
-  appId: '1:915599194468:web:6d8a9c97fa1f0f09cfe271',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: "druvis-app.firebaseapp.com",
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: "druvis-app",
+  storageBucket: "druvis-app.appspot.com",
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 firebase.initializeApp(firebaseConfig);

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { storage, db } from '../components/firebase';
+import { storage } from '../components/firebase';
 import { AnimatePresence } from 'framer-motion';
 
 import { useStateValue } from '../StateProvider';

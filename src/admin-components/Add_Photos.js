@@ -73,6 +73,7 @@ function Add_Photos() {
       case "printing-images/":
         setSubSection("printing-images/");
         break;
+      default:
     }
   }, [section]);
 
