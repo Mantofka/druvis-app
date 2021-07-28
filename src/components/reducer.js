@@ -6,28 +6,29 @@ export const initialState = {
   isChangeHeroModalOpened: false,
   isDeletePhotoSectionOpened: false,
   fetchedHeroImages: [],
+  sectionVideos: { modelling: {}, uav: {}, engineering: {} },
   Quene: [],
   isUploading: false,
   alertMessage: {
-    color: '',
-    message: '',
+    color: "",
+    message: "",
     condition: true,
   },
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_USER':
+    case "SET_USER":
       return {
         ...state,
         user: action.user,
       };
-    case 'CHANGE_POST_MODAL':
+    case "CHANGE_POST_MODAL":
       return {
         ...state,
         isModalAddPostOpened: !state.isModalAddPostOpened,
       };
-    case 'CHANGE_PHOTO_MODAL':
+    case "CHANGE_PHOTO_MODAL":
       return {
         ...state,
         isModalAddPhotosOpened:
@@ -35,12 +36,12 @@ const reducer = (state = initialState, action) => {
             ? action.payload
             : !state.isModalAddPhotosOpened,
       };
-    case 'CHANGE_GALLERY_MODAL':
+    case "CHANGE_GALLERY_MODAL":
       return {
         ...state,
         isGalleryModalOpened: action.payload,
       };
-    case 'CHANGE_HERO_MODAL':
+    case "CHANGE_HERO_MODAL":
       return {
         ...state,
         isChangeHeroModalOpened:
@@ -48,7 +49,7 @@ const reducer = (state = initialState, action) => {
             ? action.payload
             : !state.isChangeHeroModalOpened,
       };
-    case 'CHANGE_DELETE_PHOTO_MODAL':
+    case "CHANGE_DELETE_PHOTO_MODAL":
       return {
         ...state,
         isDeletePhotoSectionOpened:
@@ -56,27 +57,32 @@ const reducer = (state = initialState, action) => {
             ? action.payload
             : !state.isDeletePhotoSectionOpened,
       };
-    case 'FETCH_HERO_IMAGES':
+    case "FETCH_HERO_IMAGES":
       return {
         ...state,
         fetchedHeroImages: action.payload,
       };
-    case 'ADD_TO_QUENE':
+    case "FETCH_SECTION_VIDEOS":
+      return {
+        ...state,
+        sectionVideos: action.payload,
+      };
+    case "ADD_TO_QUENE":
       return {
         ...state,
         Quene: [...state.Quene, action.payload],
       };
-    case 'REMOVE_FROM_QUENE':
+    case "REMOVE_FROM_QUENE":
       return {
         ...state,
         Quene: [...state.Quene.slice(action.index, state.Quene.length)],
       };
-    case 'CHANGE_IS_UPLOADING':
+    case "CHANGE_IS_UPLOADING":
       return {
         ...state,
         isUploading: action.payload,
       };
-    case 'CHANGE_ALERT_MESSAGE':
+    case "CHANGE_ALERT_MESSAGE":
       return {
         ...state,
         alertMessage: { ...action.payload },

@@ -14,7 +14,8 @@ import {
   SecondaryText,
 } from "../styled-components/SectionStyles";
 
-import videos from "../videos";
+// Reducer.
+import { useStateValue } from "../StateProvider";
 
 // Framer motion variants
 import {
@@ -25,18 +26,21 @@ import {
 function Section({ bigText, subText, secRef, reference, video = "" }) {
   const [ref, inView] = useInView({ threshold: 0.4 });
   const [isVisible, setIsVisible] = useState(false);
+  const [{ sectionVideos }, dispatch] = useStateValue();
 
   const videoRef = useRef(null);
   useEffect(() => {
     inView && setIsVisible(true);
-    (inView && videos[reference]) ? videoRef.current.play() : videoRef.current.pause();
-  }, [inView]);
+    inView && sectionVideos[reference]?.minimized
+      ? videoRef.current.play()
+      : videoRef.current.pause();
+  }, [inView, []]);
 
   const fetchReferencedVideo = () => {
-    return videos[reference]
+    return sectionVideos[reference]
       ? window.innerWidth > 840
-        ? videos[reference]?.detailed
-        : videos[reference]?.minimized
+        ? sectionVideos[reference]?.detailed
+        : sectionVideos[reference]?.minimized
       : "";
   };
 
@@ -67,8 +71,9 @@ function Section({ bigText, subText, secRef, reference, video = "" }) {
             loop
             playsinline
             ref={videoRef}
+            key={fetchReferencedVideo()}
           >
-            <source src={fetchReferencedVideo()} type="video/mp4" />
+            <source src={fetchReferencedVideo()} type='video/mp4' />
           </Video>
         </SectionRight>
       </SectionContainer>

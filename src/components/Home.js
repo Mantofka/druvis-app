@@ -1,22 +1,28 @@
-import React, { useState, useEffect, useRef, Suspense } from 'react';
-import '../css/Home.css';
-import { motion, useViewportScroll } from 'framer-motion';
-import UpArrow from './UpArrow';
+import React, { useState, useEffect, useRef, Suspense } from "react";
+import "../css/Home.css";
+import { motion, useViewportScroll } from "framer-motion";
+import UpArrow from "./UpArrow";
 
 // Sections
-import HeroSection from './HeroSection';
-import SectionList from './SectionList';
+import HeroSection from "./HeroSection";
+import SectionList from "./SectionList";
 
 // Footer
-import Footer from './Footer';
+import Footer from "./Footer";
 
-import TopicsList from './TopicsList';
+import TopicsList from "./TopicsList";
+
+import { useStateValue } from "../StateProvider";
+
+// Reusable functions.
+import { fetchSectionVideos } from "../reusable-functions/videos";
 
 // Variants.
-import { arrowVariants } from '../framer-animation/HomeVariants';
+import { arrowVariants } from "../framer-animation/HomeVariants";
 
 function Home() {
   const [scrollYPos, setScrollYPos] = useState(0);
+  const [{ sectionVideos }, dispatch] = useStateValue();
 
   // References to sections
 
@@ -34,15 +40,19 @@ function Home() {
   const y = useViewportScroll(0); // Declaring variable which holds current Viewport data.
 
   useEffect(() => {
-    window.addEventListener('scroll', scrollPosition);
+    window.addEventListener("scroll", scrollPosition);
     return function cleanup() {
-      window.removeEventListener('scroll', scrollPosition);
+      window.removeEventListener("scroll", scrollPosition);
     };
+  }, []);
+
+  useEffect(() => {
+    fetchSectionVideos(dispatch, sectionVideos);
   }, []);
 
   // Function that gets user to the page top.
   const bringUp = () => {
-    window.scrollTo(0, 0, { behavior: 'smooth' });
+    window.scrollTo(0, 0, { behavior: "smooth" });
   };
 
   return (
@@ -50,7 +60,7 @@ function Home() {
       <motion.div
         variants={arrowVariants}
         initial='closed'
-        animate={scrollYPos > 500 ? 'open' : 'closed'}
+        animate={scrollYPos > 500 ? "open" : "closed"}
         whileHover={{ scale: 1.15 }}
         whileTap={{ scale: 0.85 }}
         className='upArrow__Button'
@@ -74,43 +84,12 @@ function Home() {
       </HeroSection>
 
       <Suspense fallback={<div>Kraunamas puslapis...</div>}>
-        <SectionList printingRef={printingRef} uavRef={uavRef} engineeringRef={engineeringRef} modelingResf={modelingRef} />
-        {/* One of the topics - Printing */}
-        {/*<Section
-          bigText={`3D spausdinimas`}
-          subText={`Susipažinę su techniniu modeliavimu, TinkerCAD ir Fusion 360 programose atlieka įvairius projektinius darbus. Gamina modelius, maketus ar detalių prototipus.`}
-          secRef={printingRef}
-          reference={'3d-printing'}
-        />*/}
-
-        {/* One of the topics - UAV */}
-        {/*<Section
-          bigText={`Bepiločiai`}
-          subText={`Mokinių kūrybinėse dirbtuvėse sumodeliuoti, sukonstruoti ir pagaminti bepiločiai orlaiviai. Jų valdymas atliekamas stimuliatoriuje, eksperimentuojant ir testuojant modelius.`}
-          secRef={uavRef}
-          reference={'uav'}
-          video={window.innerWidth > 840 ? uavVideo : uavVideo_min}
-        />*/}
-
-        {/* One of the topics - Engineering solutions */}
-        {/*<Section
-          bigText={`Elektronikos inžinerija`}
-          subText={`Mokinių projektiniai darbai atlikti naudojant elektronikos įtaisus ar integruotąsias elektronines sistemas, integrinių grandynų lustus, valdiklius ir kitus elektroninius įtaisus. Taip atlikdami įvairias užduotis gerina elektronikos žinias.`}
-          secRef={engineeringRef}
-          reference={'engineering'}
-          video={
-            window.innerWidth > 840 ? mechatronicsVideo : mechatronicsVideo_min
-          }
-        />*/}
-
-        {/* One of the topics - Modeliavimas */}
-        {/*<Section
-          bigText={`Modeliavimas`}
-          subText={`Mokiniai susipažinę su įvairiomis medžiagomis, išmoksta elementarių, bet nuosekliai sudėtingėjančių medžiagų rankinio apdorojimo būdų, atlieka konstravimo ir modeliavimo darbus. Mokinasi gaminti techninius žaislus, laivų ir lėktuvėlių modelius.`}
-          secRef={modelingRef}
-          reference={'modelling'}
-          video={window.innerWidth > 840 ? laserVideo : laserVideo_min}
-        />*/}
+        <SectionList
+          printingRef={printingRef}
+          uavRef={uavRef}
+          engineeringRef={engineeringRef}
+          modelingResf={modelingRef}
+        />
       </Suspense>
       <Footer />
     </div>
