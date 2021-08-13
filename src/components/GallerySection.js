@@ -14,12 +14,12 @@ import {
   LoadingText,
 } from '../styled-components/Gallery';
 
-import { LoadingImage } from '../styled-components/section/PageStyles';
+import { LoadingImage } from '../styled-components/Page';
 
 // Loading PNG
 import GearPNG from '../images/Gear.png';
 
-const galleryLoading = {
+const galleryLoadingVariants = {
   visible: {
     opacity: 1,
     rotate: 360,
@@ -117,7 +117,7 @@ const GallerySection = ({ desiredSection }) => {
         <LoadingContainer>
           <LoadingImage
             size1='300px'
-            variants={galleryLoading}
+            variants={galleryLoadingVariants}
             initial='hidden'
             exit='exit'
             animate='visible'

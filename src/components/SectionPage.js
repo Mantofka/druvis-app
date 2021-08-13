@@ -9,7 +9,7 @@ import {
   HeroSection,
   LoadingImage,
   LoadingImageContainer,
-} from '../styled-components/section/PageStyles';
+} from '../styled-components/Page';
 
 // Reusable functions
 import {
@@ -21,7 +21,7 @@ import {
 import {
   HeroImageVariants,
   loadingVariants,
-} from '../framer-animation/PageVariants';
+} from '../framer-animation/variants/Page';
 
 import GallerySection from './GallerySection';
 

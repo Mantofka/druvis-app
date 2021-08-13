@@ -18,7 +18,7 @@ import { useStateValue } from "../StateProvider";
 import { fetchSectionVideos } from "../reusable-functions/videos";
 
 // Variants.
-import { arrowVariants } from "../framer-animation/HomeVariants";
+import { arrowVariants } from "../framer-animation/variants/Home";
 
 function Home() {
   const [scrollYPos, setScrollYPos] = useState(0);
@@ -84,11 +84,11 @@ function Home() {
       </HeroSection>
 
       <Suspense fallback={<div>Kraunamas puslapis...</div>}>
-        <SectionList
+        <SectionList // Components, which renders all sections.
           printingRef={printingRef}
           uavRef={uavRef}
           engineeringRef={engineeringRef}
-          modelingResf={modelingRef}
+          modelingRef={modelingRef}
         />
       </Suspense>
       <Footer />

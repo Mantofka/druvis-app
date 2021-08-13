@@ -1,12 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
-import styled from 'styled-components';
-import { storage } from '../components/firebase';
-import { AnimatePresence } from 'framer-motion';
+import React, { useState, useRef, useEffect } from "react";
+import styled from "styled-components";
+import { storage } from "../components/firebase";
+import { AnimatePresence } from "framer-motion";
 
-import { useStateValue } from '../StateProvider';
+import { useStateValue } from "../StateProvider";
+
+// Components.
+import ModalButton from "./ModalButton";
 
 // Reusable functions.
-import { handleAlert } from '../reusable-functions/DispatchAlert';
+import { handleAlert } from "../reusable-functions/DispatchAlert";
 
 // Styles.
 import {
@@ -15,38 +18,37 @@ import {
   Selection,
   Label,
   FileButton,
-  ButtonContainer,
-  Button,
   SourceContainer,
   Image,
   DeleteIcon,
-} from '../styled-components/repetitive/AdministrationWindow';
+} from "../styled-components/repetitive/AdministrationWindow";
 
 // Reducer actions.
-import { CHANGE_HERO_MODAL } from '../actions';
+import { CHANGE_HERO_MODAL } from "../actions";
 
 // Administration Variants.
 import {
   SourceVariants,
   ModalVariants,
-} from '../framer-animation/administration/administrationModal';
+} from "../framer-animation/administration/administrationModal";
 
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 
 const CurrentUploaded = styled.div``;
 
 function ChangeHeroImage() {
   const [{ isChangeHeroModalOpened }, dispatch] = useStateValue();
-  const [section, setSection] = useState('uavHero');
+  const [section, setSection] = useState("uavHero");
   const [source, setSource] = useState(null);
   const [previewURL, setPreviewURL] = useState([]);
   const [fetchedHeroImages, setFetchedHeroImages] = useState([]);
-  const [currentHeroImage, setCurrentHeroImage] = useState('');
+  const [currentHeroImage, setCurrentHeroImage] = useState("");
   const oldFileButton = useRef(null);
+  const smallHeroImagesRef = "minimized/HeroImages/Smallest";
 
   useEffect(() => {
     storage
-      .ref('minimized/HeroImages/Smallest')
+      .ref(smallHeroImagesRef)
       .listAll()
       .then((res) =>
         res.items.map((image) => {
@@ -63,28 +65,25 @@ function ChangeHeroImage() {
   }, []);
 
   useEffect(() => {
-    setCurrentHeroImage((prevState) => ['']);
+    setCurrentHeroImage((prevState) => [""]);
     fetchedHeroImages.map((image) => {
       image.imageName.includes(section) && setCurrentHeroImage(image.imageURL);
     });
   }, [section, fetchedHeroImages]);
 
   const handlePhoto = (e) => {
-    if (e.target.files[0] && e.target.files[0].type.includes('image')) {
+    if (e.target.files[0] && e.target.files[0].type.includes("image")) {
       let file = e.target.files[0];
-      console.log(file);
       let newFile = new File([file], `${section}`, {
         type: file.type,
         lastModified: file.lastModified,
       });
-      console.log(newFile);
-
       setPreviewURL((prevState) => [
         { url: URL.createObjectURL(file), type: file.type },
       ]);
       setSource((prevState) => newFile);
     } else {
-      handleAlert('ERROR', 'Galite kelti tik nuotraukas.', dispatch);
+      handleAlert("ERROR", "Galite kelti tik nuotraukas.", dispatch);
     }
   };
 
@@ -96,23 +95,23 @@ function ChangeHeroImage() {
         let deleteURL = storage.refFromURL(image.imageURL);
         deleteURL.delete().catch((err) => {
           handleAlert(
-            'ERROR',
-            'Įvyko klaida ištrinant senąją puslapio nuotrauką.',
+            "ERROR",
+            "Įvyko klaida ištrinant senąją puslapio nuotrauką.",
             dispatch
           );
         });
       }
     });
     task.on(
-      'state_changed', // When state is changed do (properties): 1) next, 2) onError, 3) onComplete
+      "state_changed", // When state is changed do (properties): 1) next, 2) onError, 3) onComplete
       null,
       (err) => {
-        handleAlert('ERROR', 'Įvyko klaida. Bandykite dar kartą.', dispatch);
+        handleAlert("ERROR", "Įvyko klaida. Bandykite dar kartą.", dispatch);
       },
       () => {
         handleAlert(
-          'SUCCESS',
-          'Puslapio nuotrauka sėkmingai įkelta.',
+          "SUCCESS",
+          "Puslapio nuotrauka sėkmingai įkelta.",
           dispatch
         );
         setSource(null);
@@ -135,7 +134,7 @@ function ChangeHeroImage() {
       handleUpload();
       setSource(null);
     } else {
-      handleAlert('ERROR', 'Pasirinkite nuotrauką.', dispatch);
+      handleAlert("ERROR", "Pasirinkite nuotrauką.", dispatch);
     }
   };
 
@@ -154,7 +153,7 @@ function ChangeHeroImage() {
       <Modal
         variants={ModalVariants}
         initial='hidden'
-        animate={isChangeHeroModalOpened ? 'visible' : 'hidden'}
+        animate={isChangeHeroModalOpened ? "visible" : "hidden"}
         exit='hidden'
       >
         <form>
@@ -172,14 +171,14 @@ function ChangeHeroImage() {
             <Label>
               Šiuo metu esanti nuotrauka:
               <CurrentUploaded>
-                {currentHeroImage != '' ? (
+                {currentHeroImage != "" ? (
                   <Image alt='' src={currentHeroImage} />
                 ) : (
                   <span
                     style={{
-                      fontSize: '10px',
-                      color: '#403A3A',
-                      padding: '2px',
+                      fontSize: "10px",
+                      color: "#403A3A",
+                      padding: "2px",
                     }}
                   >
                     Šioje skiltyje nėra pridėtos nuotraukos
@@ -192,14 +191,14 @@ function ChangeHeroImage() {
               onClick={(e) => openFileUpload(e)}
               style={{
                 border:
-                  source != null ? 'dashed 2px pink' : 'dashed 2px #3c6b51',
+                  source != null ? "dashed 2px pink" : "dashed 2px #3c6b51",
               }}
             >
               Pasirinkimas
             </FileButton>
             <input
               type='file'
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
               ref={oldFileButton}
               onChange={handlePhoto}
             ></input>
@@ -210,11 +209,11 @@ function ChangeHeroImage() {
                 key='sourceContainer'
                 variants={SourceVariants}
                 initial='hidden'
-                animate={previewURL.length > 0 ? 'visible' : 'hidden'}
+                animate={previewURL.length > 0 ? "visible" : "hidden"}
                 exit='hidden'
               >
                 {previewURL.map((image, i) => (
-                  <div style={{ position: 'relative' }} key={i}>
+                  <div style={{ position: "relative" }} key={i}>
                     <Image alt='' key={image.url} src={image.url} />
                     <DeleteIcon>
                       <DeleteForeverIcon onClick={() => deleteImage()} />
@@ -224,41 +223,17 @@ function ChangeHeroImage() {
               </SourceContainer>
             )}
           </AnimatePresence>
-          <ButtonContainer>
-            <Button
-              inputColor='#C6CBCB'
-              bgColor='#F07167'
-              whileHover={{
-                backgroundColor: '#F35144',
-                transition: { duration: 0.2, type: 'tween' },
-              }}
-              onClick={changeModal}
-            >
-              Atšaukti
-            </Button>
-            <Button
-              inputColor='#C6CBCB'
-              bgColor='#0081A7'
-              disabled={previewURL.length ? false : true}
-              style={{ opacity: previewURL.length ? 1 : 0.2 }}
-              whileHover={{
-                scale: previewURL.length ? 1.03 : 1,
-                transition: { duration: 0.2, type: 'tween' },
-              }}
-              whileTap={{
-                scale: previewURL.length ? 0.96 : 1,
-                transition: { duration: 0.2, type: 'tween' },
-              }}
-              type='submit'
-              onClick={uploadPhotos}
-            >
-              {currentHeroImage != '' ? (
-                <span>Pakeisti</span>
-              ) : (
-                <span>Pridėti</span>
-              )}
-            </Button>
-          </ButtonContainer>
+          <ModalButton
+            source={previewURL}
+            cancelFn={changeModal}
+            submitFn={uploadPhotos}
+          >
+            {currentHeroImage != "" ? (
+              <span>Pakeisti</span>
+            ) : (
+              <span>Pridėti</span>
+            )}
+          </ModalButton>
         </form>
       </Modal>
     </AnimatePresence>

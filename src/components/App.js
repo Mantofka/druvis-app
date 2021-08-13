@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react';
-import Header from './Header';
-import Home from './Home';
-import Login from './Login';
+import React, { useEffect } from "react";
+import Header from "./Header";
+import Home from "./Home";
+import Login from "./Login";
 
 // Pages
-import Configuarion from '../admin-components/Configuarion';
-import NotFound from './NotFound';
-import SectionPage from './SectionPage';
+import Configuarion from "../admin-components/Configuarion";
+import NotFound from "./NotFound";
+import SectionPage from "./SectionPage";
 
 import {
   RouteTransition,
   AnimatedRoutes,
-} from '../framer-animation/RouteTransition';
-import { auth } from './firebase';
-import { useStateValue } from '../StateProvider';
+} from "../framer-animation/RouteTransition";
+import { auth } from "./firebase";
+import { useStateValue } from "../StateProvider";
 
 function App() {
   const [{ user }, dispatch] = useStateValue();
@@ -25,13 +25,13 @@ function App() {
         if (authedUser) {
           // If logged in
           dispatch({
-            type: 'SET_USER',
+            type: "SET_USER",
             user: authedUser,
           });
         } else {
           // If logged out
           dispatch({
-            type: 'SET_USER',
+            type: "SET_USER",
             user: null,
           });
         }

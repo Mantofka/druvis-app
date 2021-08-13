@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { storage, db } from '../components/firebase';
 import { useStateValue } from '../StateProvider';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 // Material UI
 import SearchIcon from '@material-ui/icons/Search';
@@ -28,7 +28,7 @@ import {
   IconContainer,
   Image,
   Video,
-} from '../styled-components/DeletePhotoStyles';
+} from '../styled-components/DeletePhoto';
 
 // Reusable functions.
 import { handleAlert } from '../reusable-functions/DispatchAlert';

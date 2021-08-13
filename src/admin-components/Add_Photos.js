@@ -10,6 +10,8 @@ import { handleAlert } from "../reusable-functions/DispatchAlert";
 
 // Components.
 import SubSection from "./SubSection";
+import ModalButton from "./ModalButton";
+
 // Styles
 import {
   Modal,
@@ -17,8 +19,6 @@ import {
   Selection,
   Label,
   FileButton,
-  ButtonContainer,
-  Button,
   SourceContainer,
   Image,
   Video,
@@ -86,7 +86,6 @@ function Add_Photos() {
             e.target.files[i].type.includes("video"))
         ) {
           let file = e.target.files[i];
-          console.log(e.target.files[i]);
           setPreviewURL((prevState) => [
             ...prevState,
             { url: URL.createObjectURL(file), type: file.type },
@@ -121,7 +120,6 @@ function Add_Photos() {
             ? `${section}${subSection}`
             : `${section}`;
         const task = storage.ref(`sections/${path}${file.name}`).put(file);
-        console.log(path);
         task.on(
           "state_changed", // When state is changed do (properties): 1) next, 2) onError, 3) onComplete
           null,
@@ -160,6 +158,8 @@ function Add_Photos() {
         payload: true,
       });
       changeModal();
+    } else {
+      handleAlert("ERROR", "Pasirinkite nuotrauką.", dispatch);
     }
   };
 
@@ -255,39 +255,11 @@ function Add_Photos() {
               </SourceContainer>
             )}
           </AnimatePresence>
-          <ButtonContainer>
-            {/* Cancel button*/}
-            <Button
-              inputColor='#C6CBCB'
-              bgColor='#F07167'
-              whileHover={{
-                backgroundColor: "#F35144",
-                transition: { duration: 0.2, type: "tween" },
-              }}
-              onClick={changeModal}
-            >
-              Atšaukti
-            </Button>
-            {/* Create button*/}
-            <Button
-              inputColor='#C6CBCB'
-              bgColor='#0081A7'
-              disabled={source.length ? false : true}
-              style={{ opacity: source.length ? 1 : 0.2 }}
-              whileHover={{
-                scale: source.length ? 1.03 : 1,
-                transition: { duration: 0.2, type: "tween" },
-              }}
-              whileTap={{
-                scale: source.length ? 0.96 : 1,
-                transition: { duration: 0.2, type: "tween" },
-              }}
-              type='submit'
-              onClick={uploadPhotos}
-            >
-              Sukurti
-            </Button>
-          </ButtonContainer>
+          <ModalButton
+            source={source}
+            cancelFn={changeModal}
+            submitFn={uploadPhotos}
+          />
         </form>
       </Modal>
     </AnimatePresence>

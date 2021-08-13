@@ -17,7 +17,7 @@ import {
   BigText,
   SmallText,
   IconContainer,
-} from '../styled-components/AlertStyles';
+} from '../styled-components/Alert';
 
 function Alert() {
   const [{ alertMessage }, dispatch] = useStateValue();

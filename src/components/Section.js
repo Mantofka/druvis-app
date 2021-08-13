@@ -12,7 +12,7 @@ import {
   Video,
   PrimaryText,
   SecondaryText,
-} from "../styled-components/SectionStyles";
+} from "../styled-components/Section";
 
 // Reducer.
 import { useStateValue } from "../StateProvider";
@@ -21,7 +21,7 @@ import { useStateValue } from "../StateProvider";
 import {
   sectionVariants,
   contentVariants,
-} from "../framer-animation/SectionVariants";
+} from "../framer-animation/variants/Section";
 
 function Section({ bigText, subText, secRef, reference, video = "" }) {
   const [ref, inView] = useInView({ threshold: 0.4 });

@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import {
   SectionContainer,
   TopicContainer,
-} from '../styled-components/TopicsListStyles';
+} from '../styled-components/TopicsList';
 
 // Images
 import UavImage from '../images/uav.jpg';

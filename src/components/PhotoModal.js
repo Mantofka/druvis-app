@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 // Material UI icons
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
@@ -12,82 +11,19 @@ import { useStateValue } from "../StateProvider";
 
 import { CHANGE_GALLERY_MODAL } from "../actions";
 
-const Container = styled.div`
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(75, 75, 75, 0.8);
-  z-index: 10000000;
-  overflow: hidden;
-`;
+// Styles
+import {
+  Container,
+  Modal,
+  ImageContainer,
+  Image,
+  LeftArrow,
+  RightArrow,
+  DisabledArrow,
+  CancelButton,
+} from "../styled-components/PhotoModal";
 
-const Modal = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 10px;
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  z-index: 100000;
-`;
-
-const ImageContainer = styled(motion.div)`
-  position: relative;
-  width: 100%;
-  height: 100%;
-`;
-
-const Image = styled(motion.img)`
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-`;
-
-const LeftArrow = styled(motion.div)`
-  position: absolute;
-  color: white;
-  top: 50%;
-  left: 2%;
-`;
-
-const RightArrow = styled(motion.div)`
-  position: absolute;
-  color: white;
-  top: 50%;
-  right: 2%;
-`;
-
-const DisabledArrow = styled.div`
-  color: grey;
-`;
-
-const CancelButton = styled(motion.div)`
-  position: absolute;
-  top: 1%;
-  right: 1%;
-  color: rgb(25, 25, 25);
-`;
-
-const PhotoVariants = {
-  visible: {
-    x: 0,
-    opacity: 1,
-    transition: { duration: 0.4, ease: "easeOut", delay: 0.2 },
-  },
-  hidden: (custom) => ({
-    x: -custom * -600,
-    opacity: 0,
-  }),
-  exit: (custom) => ({
-    x: -custom * 600,
-    opacity: 0,
-    transition: { duration: 0.3, ease: "easeIn", delay: 0.2 },
-  }),
-};
+import { PhotoVariants } from "../framer-animation/variants/PhotoModal";
 
 function PhotoModal({ current, images }) {
   const [{ isGalleryModalOpened }, dispatch] = useStateValue();
@@ -150,8 +86,11 @@ function PhotoModal({ current, images }) {
               exit='exit'
             />
             <CancelButton
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { delay: 1 } }}
               whileHover={{
                 rotateZ: 90,
+                transformOrigin: "12px 12px",
                 transition: { duration: 0.5, ease: "easeOut" },
               }}
             >

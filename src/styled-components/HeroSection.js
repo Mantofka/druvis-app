@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import styled from "styled-components";
+import { motion } from "framer-motion";
 
 export const HeroContainer = styled(motion.div)`
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   box-sizing: border-box;
   z-index: -10;
   width: 100%;
@@ -29,6 +29,7 @@ export const LogoImage = styled(motion.img)`
   width: 100%;
   height: 100%;
   z-index: 1;
+  cursor: pointer;
 `;
 
 export const TextContainer = styled(motion.div)`
@@ -47,12 +48,12 @@ export const TextArea = styled(motion.div)`
 `;
 
 export const PrimaryText = styled.h1`
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   color: #fdfcdc;
   font-weight: 700;
   line-height: 1.2;
-  font-size : clamp(1.8rem, 4vw, 4rem);
-  @media (max-width: 460px){
+  font-size: clamp(1.8rem, 4vw, 4rem);
+  @media (max-width: 460px) {
     line-height: 1.1;
   }
 `;
@@ -60,17 +61,16 @@ export const PrimaryText = styled.h1`
 export const SecondaryText = styled.p`
   margin-top: 10px;
   margin-bottom: 50px;
-  font-family: 'Cairo', sans-serif;
+  font-family: "Cairo", sans-serif;
   color: #202030;
   line-height: 1.35;
-  font-size : clamp(1.2rem, 2vw, 3rem);
-  @media (max-width: 460px){
+  font-size: clamp(1.2rem, 2vw, 3rem);
+  @media (max-width: 460px) {
     line-height: 1.2;
   }
 `;
 
-export const TopicListContainer = styled(motion.div)`
-`;
+export const TopicListContainer = styled(motion.div)``;
 
 export const AnimatableContainer = styled(motion.div)`
   z-index: 10;

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from "react";
 import {
   HeroContainer,
   LogoImage,
@@ -8,18 +8,18 @@ import {
   AnimatableContainer,
   PrimaryText,
   SecondaryText,
-} from '../styled-components/HeroSectionStyles';
-import { useTransform, useViewportScroll } from 'framer-motion';
+} from "../styled-components/HeroSection";
+import { useTransform, useViewportScroll } from "framer-motion";
 
 // Images
-import Logo from '../images/logo.svg';
-import Cloud from '../images/cloud.png';
+import Logo from "../images/logo.svg";
+import Cloud from "../images/cloud.png";
 
 // Framer motion variants
 import {
   AnimatableVariants,
   ElementVariants,
-} from '../framer-animation/HeroSectionVariants';
+} from "../framer-animation/variants/HeroSection";
 
 function HeroSection({ title, subText, children }) {
   const { scrollY } = useViewportScroll();
@@ -30,22 +30,24 @@ function HeroSection({ title, subText, children }) {
 
   const handleScrolling = (e) => {
     setTimeout(function () {
-      animContainerRef.current.scrollIntoView({ behavior: "smooth", block: "nearest"});
-
+      animContainerRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+      });
     }, 1);
   };
 
   return (
     <HeroContainer>
       <div
-        style={{
-          position: 'absolute',
+        style={{ // Clouds background
+          position: "absolute",
           top: 0,
-          width: '100%',
-          height: '130vh',
+          width: "100%",
+          height: "130vh",
           background: `url(${Cloud}) no-repeat`,
-          opacity: '0.09',
-          backgroundSize: '100% auto',
+          opacity: "0.09",
+          backgroundSize: "100% auto",
           left: 0,
         }}
       ></div>
@@ -58,7 +60,7 @@ function HeroSection({ title, subText, children }) {
       <AnimatableContainer
         variants={AnimatableVariants}
         initial='closed'
-        animate={window.scrollY >= window.innerHeight - 150 ? 'open' : 'closed'}
+        animate={window.scrollY >= window.innerHeight - 150 ? "open" : "closed"}
         ref={animContainerRef}
       >
         <TextContainer variants={ElementVariants}>

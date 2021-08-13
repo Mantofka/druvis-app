@@ -1,5 +1,3 @@
-// Framer motion variants.
-
 export const sectionVariants = {
     open: {
       transition: {

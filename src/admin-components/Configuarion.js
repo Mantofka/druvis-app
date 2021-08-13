@@ -15,7 +15,7 @@ import {
   MainSection,
   ButtonSection,
   Button,
-} from '../styled-components/ConfigurationStyles';
+} from '../styled-components/Configuration';
 
 // Material UI
 import AddIcon from '@material-ui/icons/Add';
